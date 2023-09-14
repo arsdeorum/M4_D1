@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifica Nome Città e Altre Funzioni</title>
+</head>
+<body>
+
+<!-- Sezione per la rimozione del carattere -->
+<input type="text" id="stringa" placeholder="Inserisci una stringa">
+<input type="number" id="posizione" placeholder="Posizione del carattere da rimuovere" min="0">
+<button onclick="mostraRisultatoRimuoviCarattere()">Rimuovi Carattere</button>
+<p id="risultatoRimuoviCarattere"></p>
+
+<!-- Sezione per il controllo dei numeri -->
+<input type="number" id="numero1" placeholder="Inserisci il primo numero">
+<input type="number" id="numero2" placeholder="Inserisci il secondo numero">
+<button onclick="mostraRisultatoControlloNumeri()">Controlla Numeri</button>
+<p id="risultatoControlloNumeri"></p>
+
+<!-- Sezione per il controllo del 50 o somma 50 -->
+<input type="number" id="numero3" placeholder="Inserisci il primo numero">
+<input type="number" id="numero4" placeholder="Inserisci il secondo numero">
+<button onclick="mostraRisultatoControlloCinquanta()">Controlla 50 o Somma 50</button>
+<p id="risultatoControlloCinquanta"></p>
+
+<!-- Sezione per la verifica del nome della città -->
+<input type="text" id="nomeCitta" placeholder="Inserisci il nome della città">
+<button onclick="mostraRisultato()">Verifica</button>
+<p id="risultato"></p>
+
+<!-- Sezione per il calcolo della somma di tutti gli elementi di un array -->
+<input type="text" id="array" placeholder="Inserisci gli elementi dell'array separati da virgole">
+<button onclick="mostraRisultatoSommaArray()">Calcola Somma</button>
+<p id="risultatoSommaArray"></p>
+
+<!-- Sezione per controllare che un array NON contenga i numeri 1 o 3 -->
+<input type="text" id="arrayControllo" placeholder="Inserisci gli elementi dell'array separati da virgole">
+<button onclick="mostraRisultatoControlloArray()">Controlla Array</button>
+<p id="risultatoControlloArray"></p>
+
+<!-- Sezione per trovare il tipo di un angolo -->
+<input type="number" id="angolo" placeholder="Inserisci i gradi dell'angolo">
+<button onclick="mostraTipoAngolo()">Trova Tipo Angolo</button>
+<p id="risultatoTipoAngolo"></p>
+
+<!-- Sezione per creare un acronimo a partire da una frase -->
+<input type="text" id="frase" placeholder="Inserisci una frase">
+<button onclick="mostraAcronimo()">Crea Acronimo</button>
+<p id="risultatoAcronimo"></p>
+
+<!-- Sezione per trovare il carattere più usato in una stringa -->
+<input type="text" id="inputStringa" placeholder="Inserisci una stringa">
+<button onclick="mostraCaratterePiuUsato()">Trova Carattere Più Usato</button>
+<p id="risultatoCaratterePiuUsato"></p>
+
+<!-- Sezione per verificare se due stringhe sono anagrammi -->
+<input type="text" id="stringa1" placeholder="Inserisci la prima stringa">
+<input type="text" id="stringa2" placeholder="Inserisci la seconda stringa">
+<button onclick="mostraRisultatoAnagrammi()">Verifica Anagrammi</button>
+<p id="risultatoAnagrammi"></p>
+
+<!-- Sezione per trovare anagrammi in una lista -->
+<input type="text" id="parolaBase" placeholder="Inserisci la parola base">
+<input type="text" id="listaAnagrammi" placeholder="Inserisci la lista di possibili anagrammi (separati da virgola)">
+<button onclick="mostraRisultatoAnagrammiInLista()">Trova Anagrammi Corretti</button>
+<p id="risultatoAnagrammiInLista"></p>
+
+<!-- Sezione per controllare se una stringa è palindroma -->
+<input type="text" id="stringaPalindroma" placeholder="Inserisci una stringa">
+<button onclick="mostraRisultatoPalindroma()">Controlla se è Palindroma</button>
+<p id="risultatoPalindroma"></p>
+
+<!-- Sezione per invertire le cifre di un numero -->
+<input type="number" id="numeroDaInvertire" placeholder="Inserisci un numero">
+<button onclick="mostraRisultatoInvertiNumero()">Inverti Cifre Numero</button>
+<p id="risultatoInvertiNumero"></p>
+
+<!-- Sezione per creare una scala con un numero specificato di scalini -->
+<input type="number" id="numeroScalini" placeholder="Inserisci il numero di scalini" min="1">
+<button onclick="creaScala()">Crea Scala</button>
+<pre id="risultatoScala"></pre>
+
+<!-- Sezione per invertire una stringa -->
+<input type="text" id="stringaDaInvertire" placeholder="Inserisci una stringa da invertire">
+<button onclick="mostraStringaInvertita()">Inverti Stringa</button>
+<p id="stringaInvertita"></p>
+
+<!-- Sezione per dividere un array in sotto-array di lunghezza Y -->
+<input type="text" id="array" placeholder="Inserisci un array (es. 1,2,3,4)">
+<input type="number" id="lunghezzaY" placeholder="Inserisci la lunghezza Y">
+<button onclick="mostraSottoArray()">Crea sotto-array</button>
+<p id="sottoArray"></p>
+
+<!-- Sezione per creare una piramide con X strati -->
+<input type="number" id="stratiPiramide" placeholder="Inserisci il numero di strati per la piramide">
+<button onclick="mostraPiramide()">Crea Piramide</button>
+<pre id="piramide"></pre>
+
+<script>
+
+function mostraRisultato() {
+  const nomeCitta = document.getElementById('nomeCitta').value;
+  const risultato = verificaNomeCitta(nomeCitta);
+  document.getElementById('risultato').textContent = risultato;
+}
+
+// 2. Funzione che rimuove un carattere da una specifica posizione in una stringa
+function rimuoviCarattere(str, pos) {
+  if (pos < 0 || pos >= str.length) {
+    return str;
+  }
+  return str.slice(0, pos) + str.slice(pos + 1);
+}
+
+function mostraRisultatoRimuoviCarattere() {
+  const str = document.getElementById('stringa').value;
+  const pos = parseInt(document.getElementById('posizione').value, 10);
+  const risultato = rimuoviCarattere(str, pos);
+  document.getElementById('risultatoRimuoviCarattere').textContent = risultato;
+}
+
+// 3. Funzione che controlla se due numeri sono compresi tra 40 e 60 o tra 70 e 100
+function controllaNumeri(num1, num2) {
+  if ((num1 >= 40 && num1 <= 60 && num2 >= 40 && num2 <= 60) || 
+      (num1 >= 70 && num1 <= 100 && num2 >= 70 && num2 <= 100)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function mostraRisultatoControlloNumeri() {
+  const num1 = parseInt(document.getElementById('numero1').value, 10);
+  const num2 = parseInt(document.getElementById('numero2').value, 10);
+  const risultato = controllaNumeri(num1, num2);
+  document.getElementById('risultatoControlloNumeri').textContent = risultato;
+}
+
+// 4. Funzione che controlla se uno dei due numeri è 50 o se la loro somma è 50
+function controlloCinquanta(num1, num2) {
+  if (num1 === 50 || num2 === 50 || (num1 + num2) === 50) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function mostraRisultatoControlloCinquanta() {
+  const num1 = parseInt(document.getElementById('numero3').value, 10);
+  const num2 = parseInt(document.getElementById('numero4').value, 10);
+  const risultato = controlloCinquanta(num1, num2);
+  document.getElementById('risultatoControlloCinquanta').textContent = risultato;
+}
+
+function verificaNomeCitta(nomeCitta) {
+  const nomeCittaLower = nomeCitta.toLowerCase();
+  if (nomeCittaLower.startsWith("los") || nomeCittaLower.startsWith("new")) {
+    return nomeCitta;
+  } else {
+    return false;
+  }
+}
+
+// 5. Funzione che calcola la somma di tutti gli elementi di un array
+function sommaArray(arr) {
+    return arr.reduce((acc, val) => acc + parseFloat(val), 0);
+  }
+  
+  function mostraRisultatoSommaArray() {
+    const arrString = document.getElementById('array').value;
+    const arr = arrString.split(',').map(item => item.trim());
+    const risultato = sommaArray(arr);
+    document.getElementById('risultatoSommaArray').textContent = risultato;
+  }
+
+  // 6. Funzione che controlla che un array NON contenga i numeri 1 o 3
+  function controlloArray(arr) {
+    return !arr.includes('1') && !arr.includes('3');
+  }
+  
+  function mostraRisultatoControlloArray() {
+    const arrString = document.getElementById('arrayControllo').value;
+    const arr = arrString.split(',').map(item => item.trim());
+    const risultato = controlloArray(arr);
+    document.getElementById('risultatoControlloArray').textContent = risultato;
+  }
+
+  // 7. Funzione per trovare il tipo di un angolo
+  function tipoAngolo(gradi) {
+    if (gradi < 90) {
+      return "acuto";
+    } else if (gradi === 90) {
+      return "retto";bella
+    } else if (gradi < 180) {
+      return "ottuso";
+    } else if (gradi === 180) {
+      return "piatto";
+    } else {
+      return "angolo non valido";
+    }
+  }
+  
+  function mostraTipoAngolo() {
+    const gradi = parseFloat(document.getElementById('angolo').value);
+    const risultato = tipoAngolo(gradi);
+    document.getElementById('risultatoTipoAngolo').textContent = risultato;
+  }
+
+  // 8. Funzione per creare un acronimo a partire da una frase
+  function creaAcronimo(frase) {
+    const parole = frase.split(' ');
+    let acronimo = '';
+    for (const parola of parole) {
+      if (parola.length > 0) {
+        acronimo += parola[0].toUpperCase();
+      }
+    }
+    return acronimo;
+  }
+  
+  function mostraAcronimo() {
+    const frase = document.getElementById('frase').value;
+    const risultato = creaAcronimo(frase);
+    document.getElementById('risultatoAcronimo').textContent = risultato;
+  }
+  
+  // 1Extra. Funzione per trovare il carattere più usato in una stringa
+  function caratterePiuUsato(str) {
+    if (str.length === 0) return null;
+    
+    const conteggioCaratteri = {};
+    
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i].toLowerCase();
+      if (!conteggioCaratteri[char]) {
+        conteggioCaratteri[char] = 1;
+      } else {
+        conteggioCaratteri[char]++;
+      }
+    }
+
+    let charPiuUsato = null;
+    let maxCount = 0;
+    
+    for (const char in conteggioCaratteri) {
+      if (conteggioCaratteri[char] > maxCount) {
+        maxCount = conteggioCaratteri[char];
+        charPiuUsato = char;
+      }
+    }
+
+    return charPiuUsato;
+  }
+
+  function mostraCaratterePiuUsato() {
+    const str = document.getElementById('inputStringa').value;
+    const risultato = caratterePiuUsato(str);
+    document.getElementById('risultatoCaratterePiuUsato').textContent = risultato;
+  }
+
+  // 2extra. Funzione per verificare se due stringhe sono anagrammi
+  function sonoAnagrammi(str1, str2) {
+    const pulisciStringa = str => str.toLowerCase().replace(/[^\w]/g, '').split('').sort().join('');
+    str1 = pulisciStringa(str1);
+    str2 = pulisciStringa(str2);
+    
+    return str1 === str2;
+  }
+ // 3Extra. Funzione per controllare se una stringa è palindroma
+  function mostraRisultatoAnagrammi() {
+    const str1 = document.getElementById('stringa1').value;
+    const str2 = document.getElementById('stringa2').value;
+    const risultato = sonoAnagrammi(str1, str2);
+    document.getElementById('risultatoAnagrammi').textContent = risultato;
+  }
+
+ // 4Extra. Funzione per controllare se una stringa è palindroma
+ function isPalindroma(str) {
+    const strPulita = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    return strPulita === strPulita.split('').reverse().join('');
+  }
+
+  function mostraRisultatoPalindroma() {
+    const str = document.getElementById('stringaPalindroma').value;
+    const risultato = isPalindroma(str);
+    document.getElementById('risultatoPalindroma').textContent = risultato;
+  }
+
+  // 5Extra. Funzione per invertire le cifre di un numero
+  function invertiNumero(num) {
+    return parseInt(num.toString().split('').reverse().join(''), 10);
+  }
+
+  function mostraRisultatoInvertiNumero() {
+    const num = parseInt(document.getElementById('numeroDaInvertire').value, 10);
+    const risultato = invertiNumero(num);
+    document.getElementById('risultatoInvertiNumero').textContent = risultato;
+  }
+
+  // 6Extra. Funzione per creare una scala con un numero specificato di scalini
+  function creaScala() {
+    const x = parseInt(document.getElementById('numeroScalini').value, 10);
+    let scala = '';
+    for (let i = 1; i <= x; i++) {
+      scala += '#'.repeat(i) + ' '.repeat(x - i) + '\n';
+    }
+    document.getElementById('risultatoScala').textContent = scala;
+  }
+
+   // 7Extra. Funzione per invertire una stringa
+   function invertiStringa(stringa) {
+    return stringa.split('').reverse().join('');
+  }
+
+  function mostraStringaInvertita() {
+    const stringa = document.getElementById('stringaDaInvertire').value;
+    const stringaInvertita = invertiStringa(stringa);
+    document.getElementById('stringaInvertita').textContent = stringaInvertita;
+  }
+
+// 8extra. Funzione per dividere un array in sotto-array di lunghezza Y
+function creaSottoArray(arr, y) {
+    let result = [];
+    while (arr.length) {
+      result.push(arr.splice(0, y));
+    }
+    return result;
+  }
+
+  function mostraSottoArray() {
+    const arrayStr = document.getElementById('array').value;
+    const y = parseInt(document.getElementById('lunghezzaY').value, 10);
+    const arr = arrayStr.split(',').map(item => parseInt(item, 10));
+    const result = creaSottoArray(arr, y);
+    document.getElementById('sottoArray').textContent = JSON.stringify(result);
+  }
+
+    // 9extra. Funzione per creare una piramide con X strati
+    function creaPiramide(x) {
+    let result = '';
+    for(let i = 0; i < x; i++) {
+      const spazi = ' '.repeat(x - i - 1);
+      const cancelletti = '#'.repeat(2 * i + 1);
+      result += spazi + cancelletti + spazi + '\n';
+    }
+    return result;
+  }
+
+  function mostraPiramide() {
+    const x = parseInt(document.getElementById('stratiPiramide').value, 10);
+    const result = creaPiramide(x);
+    document.getElementById('piramide').textContent = result;
+  }
+
+</script>
+
+</body>
+</html>
