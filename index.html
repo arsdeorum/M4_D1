@@ -98,6 +98,11 @@
 <button onclick="mostraPiramide()">Crea Piramide</button>
 <pre id="piramide"></pre>
 
+<!-- Sezione per creare una matrice a spirale NxN -->
+<input type="number" id="dimensioneMatrice" placeholder="Inserisci la dimensione N per la matrice">
+<button onclick="mostraMatriceSpirale()">Crea Matrice a Spirale</button>
+<pre id="matriceSpirale"></pre>
+
 <script>
 
 function mostraRisultato() {
@@ -352,6 +357,32 @@ function creaSottoArray(arr, y) {
     const x = parseInt(document.getElementById('stratiPiramide').value, 10);
     const result = creaPiramide(x);
     document.getElementById('piramide').textContent = result;
+  }
+
+  // 10extra. Funzione per creare una matrice a spirale
+  function generaMatriceSpirale(n) {
+    let mat = Array.from({ length: n }, () => Array.from({ length: n }, () => 0));
+    let val = 1, minCol = 0, maxCol = n - 1, minRow = 0, maxRow = n - 1;
+
+    while (minCol <= maxCol && minRow <= maxRow) {
+      for (let i = minCol; i <= maxCol; i++) mat[minRow][i] = val++;
+      for (let i = minRow + 1; i <= maxRow; i++) mat[i][maxCol] = val++;
+      for (let i = maxCol - 1; i >= minCol; i--) mat[maxRow][i] = val++;
+      for (let i = maxRow - 1; i > minRow; i--) mat[i][minCol] = val++;
+
+      minCol++;
+      minRow++;
+      maxCol--;
+      maxRow--;
+    }
+
+    return mat.map(row => row.join(' ')).join('\n');
+  }
+
+  function mostraMatriceSpirale() {
+    const n = parseInt(document.getElementById('dimensioneMatrice').value, 10);
+    const result = generaMatriceSpirale(n);
+    document.getElementById('matriceSpirale').textContent = result;
   }
 
 </script>
